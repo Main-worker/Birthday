@@ -7,6 +7,8 @@
     <title>Happy Birthday 🎂</title>
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Mali:wght@400;600&family=Pacifico&display=swap">
+
+
     <style>
         :root {
             --bg1: #fff0f5;
@@ -662,6 +664,66 @@
             min-height: 20px;
             margin-top: 12px
         }
+
+        .opts button {
+            display: block;
+            width: 100%;
+            max-width: 360px;
+            margin: 10px auto;
+            font: inherit;
+            font-size: 17px;
+            padding: 14px;
+            border: 0;
+            border-radius: 18px;
+            background: var(--card);
+            color: var(--ink);
+            box-shadow: 0 6px 16px rgba(255, 111, 165, .25);
+            cursor: pointer;
+            transition: transform .15s
+        }
+
+        .opts button:active {
+            transform: scale(.96)
+        }
+
+        .sky {
+            position: relative;
+            height: 300px;
+            margin: 10px auto;
+            max-width: 420px
+        }
+
+        .bl {
+            position: absolute;
+            background: none;
+            border: 0;
+            font-size: 64px;
+            cursor: pointer;
+            animation: flo 2.6s ease-in-out infinite alternate;
+            padding: 0
+        }
+
+        @keyframes flo {
+            from {
+                transform: translateY(0)
+            }
+
+            to {
+                transform: translateY(-24px)
+            }
+        }
+
+        .bl.pop {
+            animation: bp .35s forwards;
+            pointer-events: none
+        }
+
+        @keyframes bp {
+            to {
+                transform: scale(2);
+                opacity: 0
+            }
+        }
     </style>
 </head>
 
@@ -671,7 +733,7 @@
     <div id="lock">
         <div class="ic">🔒</div>
         <h2 style="color:#ff6fa5">ใส่รหัสก่อนนะ</h2>
-        <p id="hint">วันที่เราเริ่มคบกัน (วว/ดด/ปปปป)</p>
+        <p id="hint">วันนี้วันอะไรน๊าา(วว/ดด/ปปปป)</p>
         <div id="disp"></div>
         <div class="pad" id="pad"></div>
     </div>
@@ -699,12 +761,34 @@
                 <h2>ความทรงจำของเรา</h2>
                 <p class="sub">แตะรูปเพื่อพลิกดูข้อความด้านหลัง 💌</p>
                 <div class="grid" id="grid"></div>
-                <a class="btn" href="#reasons" style="display:inline-block;text-decoration:none;margin-top:36px">ถัดไป
+                <a class="btn" href="#quiz" style="display:inline-block;text-decoration:none;margin-top:36px">ถัดไป
                     💗</a>
             </section>
         </div>
 
-        <div class="view" id="v-reasons"><a class="back-l" href="#memories">← กลับ</a>
+        <div class="view" id="v-quiz"><a class="back-l" href="#quiz">← กลับ</a>
+            <section>
+                <h2>ทายใจหน่อย</h2>
+                <p class="sub" id="qn"></p>
+                <div id="qq" style="font-size:19px;margin:10px 0 18px;line-height:1.6"></div>
+                <div class="opts" id="qo"></div>
+                <a class="btn" id="qnext" href="#balloons" style="display:none;text-decoration:none">ผ่านแล้ว! ถัดไป
+                    🎈</a>
+            </section>
+        </div>
+
+        <div class="view" id="v-balloons"><a class="back-l" href="#balloons">← กลับ</a>
+            <section>
+                <h2>แตะลูกโป่ง</h2>
+                <p class="sub" id="bcount">แตะให้แตกทุกลูกเลย 🎈</p>
+                <div class="sky" id="sky"></div>
+                <div id="bmsg" style="min-height:60px;font-size:18px;line-height:1.7"></div>
+                <a class="btn" id="bnext" href="#reasons"
+                    style="display:none;text-decoration:none;margin-top:20px">ถัดไป 💗</a>
+            </section>
+        </div>
+
+        <div class="view" id="v-reasons"><a class="back-l" href="#reasons">← กลับ</a>
             <section>
                 <h2>เหตุผลที่รักเธอ</h2>
                 <p class="sub">แตะหัวใจแต่ละดวงดูนะ</p>
@@ -755,6 +839,10 @@
                     🎂</a>
             </section>
         </div>
+
+        
+
+        
     </main>
     <footer id="foot"></footer>
 
@@ -763,7 +851,7 @@
         const CFG = {
             name: "ที่รัก",
             from: "วิท",
-            since: "2532-12-21T00:00:00",
+            since: "1989-12-21T00:00:00",
             birthday: "1989-12-21",
             message: "สุขสันต์วันเกิดนะคนเก่งของเรา ขอให้ปีนี้เต็มไปด้วยรอยยิ้ม ความสุข และสิ่งดีๆ ทุกวัน ขอบคุณที่อยู่ข้างกันมาตลอดนะ",
             photos: [
@@ -785,6 +873,20 @@
             wish: "ขอให้เธอมีความสุขมากๆ สุขภาพแข็งแรง และมีฉันอยู่ข้างๆ ทุกวันนะ 💖",
             letter: "ถึงคนที่น่ารักที่สุด<br>ขอบคุณที่เข้ามาในชีวิตของฉัน ขอบคุณที่ยิ้มให้ ขอบคุณที่เข้าใจ และขอบคุณที่อยู่ข้างกันในทุกวัน วันนี้เป็นวันของเธอ ฉันอยากให้เธอรู้ว่าเธอสำคัญกับฉันมากแค่ไหน สุขสันต์วันเกิดนะ รักเธอเสมอ 💗",
             video: "5655420a-1db4-48e0-9004-13ae4506d1eb.mp4",
+            quiz: [
+                {q: "ของกินที่เธอชอบที่สุดคืออะไร?", opts: ["ชาบู", "ส้มตำ", "ไอศกรีม", "ข้าวมันไก่"], a: 2},
+                {q: "ครั้งแรกที่เราไปเที่ยวด้วยกัน ไปที่ไหน?", opts: ["ทะเล", "ภูเขา", "ห้างสรรพสินค้า", "คาเฟ่"], a: 3},
+                {q: "สีที่เธอชอบที่สุดคือสีอะไร?", opts: ["ชมพู", "ฟ้า", "เขียว", "ม่วง"], a: 0},
+                {q: "ฉันรักเธอมากแค่ไหน?", opts: ["นิดหน่อย", "เยอะ", "มากกว่าที่เธอคิด", "ไม่บอก"], a: 2}
+            ],
+            balloons: [
+                "เธอคือคนที่ทำให้ฉันยิ้มได้ทุกวัน 😊",
+                "ขอให้ปีนี้มีแต่เรื่องดีๆ เข้ามา ✨",
+                "เธอสวยที่สุดในวันนี้ และทุกวัน 💖",
+                "ขอบคุณที่อยู่ข้างกันนะ 🥰",
+                "อยากฉลองวันเกิดกับเธอทุกปีเลย 🎂",
+                "รักเธอที่สุดในโลก 💗"
+            ]
         };
         /* ========================== */
         const $ = s => document.querySelector(s);
@@ -812,7 +914,7 @@
         }
 
         /* router: #home #memories #reasons #cake #letter */
-        const VIEWS = ["home", "memories", "reasons", "cake", "letter"]; let unlocked = false, typed = false;
+        const VIEWS = ["home", "memories", "quiz", "balloons", "reasons", "cake", "letter"]; let unlocked = false, typed = false;
         function route() {
             if (!unlocked) return;
             let n = location.hash.slice(1); if (!VIEWS.includes(n)) n = "home";
@@ -897,6 +999,39 @@
         $('#vin').onchange = e => {const f = e.target.files[0]; if (!f) return; const v = $('#vid'); v.src = URL.createObjectURL(f); v.style.display = ""; v.play().catch(() => { })};
         $('#env').onclick = () => {$('#letter').classList.toggle('open'); $('#etop').textContent = $('#letter').classList.contains('open') ? '💖' : '💌'};
         route();
+
+        /* quiz */
+        let qi = 0;
+        function qshow() {
+            if (qi >= CFG.quiz.length) {
+                $('#qq').textContent = "เก่งมาก ตอบถูกหมดเลย 💖"; $('#qo').innerHTML = ""; $('#qn').textContent = "";
+                $('#qnext').style.display = "inline-block"; confetti(); return;
+            }
+            const q = CFG.quiz[qi];
+            $('#qn').textContent = "ข้อ " + (qi + 1) + " / " + CFG.quiz.length;
+            $('#qq').textContent = q.q; $('#qo').innerHTML = "";
+            q.opts.forEach((o, i) => {
+                const b = document.createElement('button'); b.textContent = o;
+                b.onclick = () => {if (i === q.a) {qi++; qshow()} else sulk()};
+                $('#qo').appendChild(b);
+            });
+        }
+        qshow();
+
+        /* balloons */
+        const BCOL = ["#ff8fb8", "#ffb36b", "#ffd966", "#8fd9a8", "#8ec5ff", "#c9a3ff"];
+        let popped = 0;
+        CFG.balloons.forEach((m, i) => {
+            const b = document.createElement('button'); b.className = 'bl'; b.textContent = "🎈";
+            b.style.left = (6 + i * 15) + "%"; b.style.bottom = ((i % 2) * 70) + "px"; b.style.animationDelay = (i * .4) + "s";
+            b.style.filter = "drop-shadow(0 6px 8px " + BCOL[i % 6] + ")";
+            b.onclick = () => {
+                b.classList.add('pop'); $('#bmsg').textContent = m; popped++;
+                $('#bcount').textContent = "แตกแล้ว " + popped + " / " + CFG.balloons.length;
+                if (popped === CFG.balloons.length) {$('#bnext').style.display = "inline-block"; confetti()}
+            };
+            $('#sky').appendChild(b);
+        });
     </script>
 </body>
 
