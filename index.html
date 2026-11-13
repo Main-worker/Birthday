@@ -724,6 +724,47 @@
                 opacity: 0
             }
         }
+
+        #bpic {
+            position: fixed;
+            inset: 0;
+            z-index: 65;
+            background: rgba(80, 20, 45, .6);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px
+        }
+
+        #bpic.show {
+            display: flex
+        }
+
+        #bpic .bbox {
+            background: #fff;
+            color: #6b2a45;
+            border-radius: 22px;
+            padding: 14px 14px 20px;
+            text-align: center;
+            max-width: min(420px, 92vw);
+            animation: pp .5s;
+            box-shadow: 0 14px 40px rgba(0, 0, 0, .35)
+        }
+
+        #bpic img {
+            width: 100%;
+            max-height: 60vh;
+            object-fit: cover;
+            border-radius: 14px;
+            display: block
+        }
+
+        #bpic p {
+            font-size: 19px;
+            font-weight: 600;
+            margin: 14px 6px 0;
+            line-height: 1.6
+        }
     </style>
 </head>
 
@@ -766,7 +807,7 @@
             </section>
         </div>
 
-        <div class="view" id="v-quiz"><a class="back-l" href="#quiz">← กลับ</a>
+        <div class="view" id="v-quiz"><a class="back-l" href="#memories">← กลับ</a>
             <section>
                 <h2>ทายใจหน่อย</h2>
                 <p class="sub" id="qn"></p>
@@ -777,7 +818,7 @@
             </section>
         </div>
 
-        <div class="view" id="v-balloons"><a class="back-l" href="#balloons">← กลับ</a>
+        <div class="view" id="v-balloons"><a class="back-l" href="#quiz">← กลับ</a>
             <section>
                 <h2>แตะลูกโป่ง</h2>
                 <p class="sub" id="bcount">แตะให้แตกทุกลูกเลย 🎈</p>
@@ -788,7 +829,7 @@
             </section>
         </div>
 
-        <div class="view" id="v-reasons"><a class="back-l" href="#reasons">← กลับ</a>
+        <div class="view" id="v-reasons"><a class="back-l" href="#balloons">← กลับ</a>
             <section>
                 <h2>เหตุผลที่รักเธอ</h2>
                 <p class="sub">แตะหัวใจแต่ละดวงดูนะ</p>
@@ -799,7 +840,7 @@
             </section>
         </div>
 
-        <div class="view" id="v-cake"><a class="back-l" href="#letter">← กลับ</a>
+        <div class="view" id="v-cake"><a class="back-l" href="#reasons">← กลับ</a>
             <section>
                 <h2>ขอพรก่อนนะ</h2>
                 <p class="sub">แตะเค้กเพื่อเป่าเทียน 🎂</p>
@@ -839,10 +880,17 @@
                     🎂</a>
             </section>
         </div>
+        <div id="bpic">
+            <div class="bbox">
+                <img id="bimg" alt="">
+                <p id="bcap"></p>
+                <button class="btn" id="bclose">ปิด 💖</button>
+            </div>
+        </div>
 
-        
 
-        
+
+
     </main>
     <footer id="foot"></footer>
 
@@ -874,9 +922,9 @@
             letter: "ถึงคนที่น่ารักที่สุด<br>ขอบคุณที่เข้ามาในชีวิตของฉัน ขอบคุณที่ยิ้มให้ ขอบคุณที่เข้าใจ และขอบคุณที่อยู่ข้างกันในทุกวัน วันนี้เป็นวันของเธอ ฉันอยากให้เธอรู้ว่าเธอสำคัญกับฉันมากแค่ไหน สุขสันต์วันเกิดนะ รักเธอเสมอ 💗",
             video: "5655420a-1db4-48e0-9004-13ae4506d1eb.mp4",
             quiz: [
-                {q: "ของกินที่เธอชอบที่สุดคืออะไร?", opts: ["ชาบู", "ส้มตำ", "ไอศกรีม", "ข้าวมันไก่"], a: 2},
+                {q: "ของกินที่เธอชอบที่สุดคืออะไร?", opts: ["ชาบู", "ส้มตำ", "ปลาดุกฟู", "ไอศครีม"], a: 2},
                 {q: "ครั้งแรกที่เราไปเที่ยวด้วยกัน ไปที่ไหน?", opts: ["ทะเล", "ภูเขา", "ห้างสรรพสินค้า", "คาเฟ่"], a: 3},
-                {q: "สีที่เธอชอบที่สุดคือสีอะไร?", opts: ["ชมพู", "ฟ้า", "เขียว", "ม่วง"], a: 0},
+                {q: "สีที่เธอชอบที่สุดคือสีอะไร?", opts: ["ชมพู", "ฟ้า", "เขียว", "ม่วง"], a: 3},
                 {q: "ฉันรักเธอมากแค่ไหน?", opts: ["นิดหน่อย", "เยอะ", "มากกว่าที่เธอคิด", "ไม่บอก"], a: 2}
             ],
             balloons: [
@@ -886,7 +934,9 @@
                 "ขอบคุณที่อยู่ข้างกันนะ 🥰",
                 "อยากฉลองวันเกิดกับเธอทุกปีเลย 🎂",
                 "รักเธอที่สุดในโลก 💗"
-            ]
+            ],
+            balloonPhoto: "109692.jpg",
+            balloonPhotoCap: "พี่หล่อไหมจ้ะ น้องสาว 🎂💖"
         };
         /* ========================== */
         const $ = s => document.querySelector(s);
@@ -1028,10 +1078,18 @@
             b.onclick = () => {
                 b.classList.add('pop'); $('#bmsg').textContent = m; popped++;
                 $('#bcount').textContent = "แตกแล้ว " + popped + " / " + CFG.balloons.length;
-                if (popped === CFG.balloons.length) {$('#bnext').style.display = "inline-block"; confetti()}
+                if (popped === CFG.balloons.length) {$('#bnext').style.display = "inline-block"; confetti(); showBpic()}
             };
             $('#sky').appendChild(b);
         });
+        function showBpic() {
+            if (!CFG.balloonPhoto) return;
+            $('#bimg').src = CFG.balloonPhoto;
+            $('#bcap').textContent = CFG.balloonPhotoCap || "";
+            setTimeout(() => $('#bpic').classList.add('show'), 600);
+        }
+        $('#bclose').onclick = () => $('#bpic').classList.remove('show');
+        $('#bpic').onclick = e => {if (e.target.id === 'bpic') $('#bpic').classList.remove('show')};
     </script>
 </body>
 
