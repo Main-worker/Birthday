@@ -735,6 +735,10 @@
                 </div>
                 <button class="btn" id="blow">เป่าเทียน 🌬️</button>
                 <div id="wish"></div>
+                <div id="vbox" style="display:none;margin-top:18px"><video id="vid" controls playsinline
+                        style="width:100%;max-width:420px;border-radius:18px;box-shadow:0 8px 22px rgba(107,42,69,.3)"></video><br><button
+                        class="btn" id="vpick" style="display:none">+ เลือกวิดีโอ 🎬</button><input type="file" id="vin"
+                        accept="video/*" hidden></div>
                 <a class="btn" id="again" href="#home"
                     style="display:none;text-decoration:none;margin-top:30px">กลับไปดูอีกรอบ 💖</a>
             </section>
@@ -759,7 +763,8 @@
         const CFG = {
             name: "ที่รัก",
             from: "วิท",
-            since: "2024-02-14T00:00:00",
+            since: "2532-12-21T00:00:00",
+            birthday: "1989-12-21",
             message: "สุขสันต์วันเกิดนะคนเก่งของเรา ขอให้ปีนี้เต็มไปด้วยรอยยิ้ม ความสุข และสิ่งดีๆ ทุกวัน ขอบคุณที่อยู่ข้างกันมาตลอดนะ",
             photos: [
                 {src: "62127_0.jpg", cap: "วันแรกที่เราไปเที่ยวด้วยกัน", back: "วันนั้นเป็นวันที่ฉันรู้ว่าอยากอยู่ข้างเธอไปนานๆ 🥰"},
@@ -778,7 +783,8 @@
                 "เพราะเธอคือเธอ และฉันรักเธอที่สุด"
             ],
             wish: "ขอให้เธอมีความสุขมากๆ สุขภาพแข็งแรง และมีฉันอยู่ข้างๆ ทุกวันนะ 💖",
-            letter: "ถึงคนที่น่ารักที่สุด<br>ขอบคุณที่เข้ามาในชีวิตของฉัน ขอบคุณที่ยิ้มให้ ขอบคุณที่เข้าใจ และขอบคุณที่อยู่ข้างกันในทุกวัน วันนี้เป็นวันของเธอ ฉันอยากให้เธอรู้ว่าเธอสำคัญกับฉันมากแค่ไหน สุขสันต์วันเกิดนะ รักเธอเสมอ 💗"
+            letter: "ถึงคนที่น่ารักที่สุด<br>ขอบคุณที่เข้ามาในชีวิตของฉัน ขอบคุณที่ยิ้มให้ ขอบคุณที่เข้าใจ และขอบคุณที่อยู่ข้างกันในทุกวัน วันนี้เป็นวันของเธอ ฉันอยากให้เธอรู้ว่าเธอสำคัญกับฉันมากแค่ไหน สุขสันต์วันเกิดนะ รักเธอเสมอ 💗",
+            video: "5655420a-1db4-48e0-9004-13ae4506d1eb.mp4",
         };
         /* ========================== */
         const $ = s => document.querySelector(s);
@@ -812,7 +818,7 @@
             let n = location.hash.slice(1); if (!VIEWS.includes(n)) n = "home";
             document.querySelectorAll('.view').forEach(v => v.classList.toggle('act', v.id === 'v-' + n));
             scrollTo(0, 0);
-            if (n === "cake") {$('#cake').classList.remove('out'); $('#wish').textContent = ""; $('#again').style.display = "none"}
+            if (n === "cake") {$('#cake').classList.remove('out'); $('#wish').textContent = ""; $('#again').style.display = "none"; $('#vbox').style.display = "none"; $('#vid').pause()}
             if (n === "home" && !typed) {typed = true; typeIt()}
         }
         addEventListener('hashchange', route);
@@ -822,8 +828,9 @@
         }
 
         /* passcode: DDMMYYYY (ค.ศ. หรือ พ.ศ. ก็ได้) */
-        const D0 = new Date(CFG.since), dd = String(D0.getDate()).padStart(2, '0'), mm = String(D0.getMonth() + 1).padStart(2, '0');
-        const OK = [dd + mm + D0.getFullYear(), dd + mm + (D0.getFullYear() + 543)];
+        const D0 = new Date(CFG.birthday);
+        const B = new Date(CFG.birthday), dd = String(B.getDate()).padStart(2, '0'), mm = String(B.getMonth() + 1).padStart(2, '0');
+        const OK = [dd + mm + B.getFullYear(), dd + mm + (B.getFullYear() + 543)];
         let code = "";
         function show() {const t = code.padEnd(8, "•"); $('#disp').textContent = t.slice(0, 2) + " / " + t.slice(2, 4) + " / " + t.slice(4)}
         function unlock() {
@@ -875,10 +882,19 @@
         });
 
         /* cake */
-        function blow() {$('#cake').classList.add('out'); confetti(); $('#wish').textContent = CFG.wish; $('#again').style.display = "inline-block"}
+        function blow() {
+            $('#cake').classList.add('out'); confetti();
+            $('#wish').textContent = CFG.wish; $('#again').style.display = "inline-block";
+            const v = $('#vid'); $('#vbox').style.display = "block";
+            if (CFG.video && !v.getAttribute('src')) v.src = CFG.video;
+            if (v.getAttribute('src')) {v.style.display = ""; if (v.paused && !v.currentTime) setTimeout(() => v.play().catch(() => { }), 900)} else v.style.display = "none";
+            $('#vpick').style.display = CFG.video ? "none" : "inline-block"
+        }
         $('#cake').onclick = blow; $('#blow').onclick = blow;
 
         /* letter */
+        $('#vpick').onclick = () => $('#vin').click();
+        $('#vin').onchange = e => {const f = e.target.files[0]; if (!f) return; const v = $('#vid'); v.src = URL.createObjectURL(f); v.style.display = ""; v.play().catch(() => { })};
         $('#env').onclick = () => {$('#letter').classList.toggle('open'); $('#etop').textContent = $('#letter').classList.contains('open') ? '💖' : '💌'};
         route();
     </script>
